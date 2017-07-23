@@ -1,0 +1,132 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Jul 21 16:54:58 2017
+
+@author: yue wu
+"""
+
+import nltk
+
+# nltk.download()
+
+# tokenlizing - word tokenizers .. sentence tokenizers
+# lexicon and corporas
+# corporas - body of text. ex: medical journals, presidential speeches, English language
+# lexicon - words and their means
+
+# investor-speak ...... regular english-speak
+
+# investor speak 'bull' = someone who is positive about the market
+# english-speak 'null' = scary animal you dont want running @ you
+
+example_text = "Hello Mr. Smith, how are you doing today? The weather is great and Python is great. The sky is blue"
+
+print (nltk.sent_tokenize(example_text))
+
+#print (sent_tokenize(example_text))
+
+print (nltk.word_tokenize(example_text))
+
+for i in nltk.word_tokenize(example_text):
+    print (i)
+    
+# a tricky sentence from grace
+
+exm_grace = "because nothing! what are you doing? Bye bye!"
+exm_lucas = "Diamond shinning above you! Circle is a round shape."
+
+
+for i in nltk.word_tokenize(exm_grace):
+    print (i)
+    
+
+for s in nltk.sent_tokenize(example_text):
+    print (s)
+    
+
+for i in nltk.word_tokenize(exm_lucas):
+    print (i)
+    
+
+for s in nltk.sent_tokenize(exm_lucas):
+    print (s)
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+stop_words = set(stopwords.words("english"))
+
+print (stop_words)
+
+words = word_tokenize(example_text)
+
+filtered_sentence = []
+
+for w in words:
+    if w not in stop_words: filtered_sentence.append(w)
+
+filtered_sentence2 = [w for w in words if not w in stop_words]
+
+filtered_sentence2
+
+
+# stemming, example : written -> write
+
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+
+ps = PorterStemmer()
+
+example_words = ["python", "pythoner", "pythoning", "pythoned", "pythonly"]
+
+for w in example_words:
+    print(ps.stem(w))
+    
+new_text = "It is very important while you to be pythonly while you are pythoning with python. All pythoners have pythoned poorky at least once."
+
+words = word_tokenize(new_text)
+
+for w in words:
+    print(ps.stem(w))
+    
+    # wordnet can skip stemming
+
+from nltk.corpus import state_union
+from nltk.tokenize import PunktSentenceTokenizer
+# unsupervised learning
+
+train_text = state_union.raw("2005-GWBush.txt")
+sample_text = state_union.raw("2006-GWBush.txt")
+
+#customer_sent_tokenizer = PunktSentenceTokenizer(sample_text)
+customer_sent_tokenizer = PunktSentenceTokenizer(train_text)
+
+tokenized = customer_sent_tokenizer.tokenize(sample_text)
+
+def process_content():
+    try:
+        for i in tokenized:
+            words = nltk.word_tokenize(i)
+            tagged = nltk.pos_tag(words)
+           # tagged = nltk.part_of_speech_tag(words)
+            print(tagged)
+        
+    except Exception as e:
+        print (str(e))
+
+process_content()
+
+# chunking
+
+    chunkGram = r"""CHunk: {<RB.?>*<VB.?>*<NNP><NN>?} """
+    chunkParser = nltk.RegexpParser(chunkGram)
+
+
+
+
+
+
+
+
+
+    
